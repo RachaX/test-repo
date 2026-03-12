@@ -1,29 +1,26 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../components/Home.vue";
-import Login from "../components/Login.vue";
+import { createRouter, createWebHistory } from "vue-router";
+import Contact from '../views/Contact.vue';
+import About from '../views/About.vue';
 
 const routes = [
     {
         path: '/',
-        redirect: '/login'
+        redirect: '/contact'
     },
     {
-        path: '/home',
-        name: 'home',
-        component: Home
+        path: '/contact',
+        name: 'contact',
+        component: Contact
     },
-
-    // ci trigger 
-
     {
-        path: '/login',
-        name: 'login',
-        component: Login
+        path: '/about',
+        name: 'about',
+        component: About
     }
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })
 
