@@ -21,9 +21,33 @@
 }
 
 html, body {
+    height: 100%;
     background-color: var(--black);
     color: var(--white);
     font-family: var(--font-body);
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
 }
+
+#app {
+    min-height: 100vh;
+}
+
+.container {
+    height: 100%;
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .outer {
+    border: 1px solid var(--gold);
+    width: 60%;
+    max-width: 800px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    background: var(--black-card);
+  }

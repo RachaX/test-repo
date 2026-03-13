@@ -11,12 +11,12 @@
                 <router-link to="/about" class="nav-link">About</router-link>
             </div>
 
-            <a href="#contact" class="header__cta">
+            <router-link to="/contact" class="header__cta">
                 <span>Contact Sales</span>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
                 </svg>
-            </a>
+            </router-link>
         </div>
         <div class="header__line">
             <div class="header__line-fill"></div>
@@ -89,7 +89,7 @@
         font-size: 22px;
         font-weight: 600;
         letter-spacing: 0.25em;
-        color: var(--white);
+        color: var(--gold);
     }
 
     .header__nav {

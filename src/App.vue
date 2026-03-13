@@ -1,12 +1,21 @@
+<script setup lang="ts">
+import Header from './components/Header.vue';
+
+</script>
+
 <template>
-  <router-view />
+  <div class="content">
+    <Header/>
+    <router-view style="flex: 1"/>
+  </div>
 </template>
 
-<style>
-  #app {
-    padding: 0px;
-    margin: 0px;
-    width: 100%;
-    max-width: unset;
+<style scoped>
+  .content {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
   }
 </style>
+
+
