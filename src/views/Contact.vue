@@ -56,7 +56,7 @@
                         <span class="form__error" v-if="touched.message && errors.messageError">{{ errors.messageError }}</span>
                     </div>
 
-                    <button class="form__submit" :disabled="!isFormValid" type="submit" :class="{ 'form__submit--disabled' : !isFormValid}" @click="handleSubmit">
+                    <button class="form__submit" :disabled="!isFormValid || isLoading" type="submit" :class="{ 'form__submit--disabled' : !isFormValid}">
                         <span v-if="isLoading" class="loader"></span>
                         <span v-else class="form__submit-content">
                             <span>Send message</span>
