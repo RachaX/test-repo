@@ -56,11 +56,14 @@
                         <span class="form__error" v-if="touched.message && errors.messageError">{{ errors.messageError }}</span>
                     </div>
 
-                    <button class="form__submit" :disabled="!isFormValid" type="submit" :class="{ 'form__submit--disabled' : !isFormValid}">
-                        <span>Send message</span>
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                            <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                        </svg>
+                    <button class="form__submit" :disabled="!isFormValid" type="submit" :class="{ 'form__submit--disabled' : !isFormValid}" @click="handleSubmit">
+                        <span v-if="isLoading" class="loader"></span>
+                        <span v-else class="form__submit-content">
+                            <span>Send message</span>
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                            </svg>
+                        </span>
                     </button>
                 </form>
             </div>
@@ -68,6 +71,8 @@
 </template>
 
 <script>
+    import client  from '../service/service.ts';
+
     export default {
         name: "Contact",
         computed: {
@@ -119,6 +124,7 @@
         },
         data() {
             return {
+                isLoading: false,
                 form: {
                     firstName: '',
                     lastName: '',
@@ -138,11 +144,46 @@
             }
         },
         methods: {
-            handleSubmit() {
-                console.log(form);
+            async handleSubmit() {
+                this.isLoading = true;
+
+                try {
+                    const response = await client.post(
+                        '/api/report/',
+                        {
+                            'user' : this.form.firstName + " " + this.form.lastName,
+                            'contact_method' : this.form.contactMethod,
+                            'contact_info' : this.form.contactMethod == 'email' ? this.form.email : this.form.phoneNumber,
+                            'message' : this.form.message
+                        } 
+                    )
+                } catch (err) {
+                    console.log('Error while submitting form:', err)
+                } finally {
+                    this.isLoading = false;
+                    this.resetForm();
+                }
             },
             touch(field) {
                 this.touched[field] = true;
+            },
+            resetForm() {
+                this.form = {
+                    firstName: '',
+                    lastName: '',
+                    phoneNumber: '',
+                    email: '',
+                    contactMethod: '',
+                    message: ''
+                },
+                this.touched = {
+                    firstName: false,
+                    lastName: false,
+                    phoneNumber: false,
+                    email: false,
+                    contactMethod: false,
+                    message: false
+                }
             }
         }
     }
@@ -316,6 +357,30 @@
     .form__submit--disabled {
         opacity: 0.4;
         cursor: not-allowed;
+    }
+
+    
+    .form__submit {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 48px; /* Postavite fiksnu visinu da se dugme ne \"skuplja\" */
+    }
+
+    .form__submit-content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .loader {
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
     }
 
 </style>
